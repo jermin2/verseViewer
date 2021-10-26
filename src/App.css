@@ -36,3 +36,53 @@
     transform: rotate(360deg);
   }
 }
+
+.verse-ref {
+  font-weight:bold;
+}
+
+.verse-ref:hover {
+  cursor: pointer;
+}
+
+.main {
+  display:flex;
+  width: 100%;
+}
+
+.parser, .viewer{
+  width: 50%;
+  padding: 10px;
+}
+
+.viewer {
+  margin-right: 30px;
+}
+
+textarea {
+  width: calc( 100% - 40px);
+  height: 80vh;
+  margin: 20px;
+
+}
+
+button {
+  padding: 10px;
+  color: white;
+  background-color: green;
+  border-radius: 10px;
+  display:block;
+  margin:auto;
+  min-width:80px;
+}
+
+.parser-heading, .viewer-heading {
+  text-align:center;
+  font-size:larger;
+  padding: 20px;
+}
+
+html {
+  width: 100vw;
+  overflow-y: scroll;
+}
