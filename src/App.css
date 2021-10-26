@@ -91,3 +91,9 @@ html {
 .outline-text {
   font-size:large;
 }
+
+.footer {
+  width:50%;
+  text-align:center;
+  margin:auto;
+}

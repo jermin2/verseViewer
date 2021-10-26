@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 
 import Verse from './HoverableDiv'
 
+const starting_text = "Paste your ministry portion / outline with verse references here. Then push the green button. John 3:16. Brackets mean the program has recognized the verse reference. You can click the the references to show the verse";
+
 export default function VerseViewer() {
-    const [textStuff, setText] = useState("a")
+    const [textStuff, setText] = useState(starting_text)
     const [clean, setClean] = useState("");
     const [showAll, setShowAll] = useState(false);
 
@@ -82,15 +84,18 @@ export default function VerseViewer() {
         <div className="main">
             <div className="parser">
                 <div className="parser-heading">Insert Ministry here</div>
-                <textarea onChange={handleChange} value={textStuff}/>
                 <button className="btn btn-primary" onClick={()=>parse()}>Go!</button>
+                <textarea onChange={handleChange} value={textStuff}/>
+                <div className="footer">Ⓒ Jermin Tiu 2021</div>
             </div>
             <div className="viewer">
                 <div className="viewer-heading">Transformation!</div>
                 <button onClick={() => handleHideAll()}>Hide/Show</button>
                 {render()}
+                
             </div>
         </div>
+        
 
         </>
     )
