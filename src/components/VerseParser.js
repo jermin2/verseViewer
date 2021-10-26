@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 
 import Verse from './HoverableDiv'
-import axios from 'axios'
 
 export default function VerseViewer() {
     const [textStuff, setText] = useState("a")
     const [clean, setClean] = useState("");
+    const [showAll, setShowAll] = useState(false);
 
     function parse(){
         //console.log(textStuff)
@@ -30,71 +30,51 @@ export default function VerseViewer() {
         text = text.replace(/(\d )?[A-Z][a-z]{2,3}\.?(((;)? \d{1,3}:\d+(([a-c])?|(-\d+)?|(, \d+)?)+))+/gm, '{$&}')
 
         const lines = text.split('\n')
-        const display = []
-        lines.map( line => {
+        const display = lines.map( line => {
             const verses = line.matchAll(/{([\S\s]+?)}/igm);
 
             const verseObject = [];
             for(const verse of verses){
-
-                const text = fetchVerse(verse[1]);
-
+                const text = [];
                 verseObject.push({ ref: verse[1], text: text})
             }
-            
-            const lineObject = { text: line, verses: verseObject };
-            display.push(lineObject);
+            return { text: line, verses: verseObject, key: line };
             
         });
-        
-
-        console.log(display);
-
         setClean(display);
-
-    }
-    function fetchVerse(ref){
-        var verseText = []
-        return verseText;
-      
-    }
-
-    function renderVerseText(verseText){
-        console.log("renderVerseText", verseText);
-        return verseText.map( text => {
-            return<div>{text}</div>
-        })
     }
 
     function renderVerses(verses){
-        console.log("renderVerse", verses);
         return verses.map( verse => {
-            return <><Verse verseRef={verse.ref} /></>
-            return <><div className="verse-ref">{verse.ref}</div><div>{renderVerseText(verse.text)}</div>  </>
+            return <Verse verseRef={verse.ref} key={verse.ref} showAll={showAll}/>
         })
     }
 
     function render(){
-        console.log("render", clean);
         if( clean === ""){
             return <></>
         }
 
-            return (
-                <>
-                {clean.map(line => { return <>
-                    
-                        <div>{line.text}</div>
-                        {renderVerses(line.verses)}
-                    </> } )}
-                </>
-            );
+        return (
+            <>
+            {clean.map(line => { return <div key={line.text}>
+                
+                    <div className="outline-text" key={line.text}>{line.text}</div>
+                    {renderVerses(line.verses)}
+                    <div className="outline-text" key={line.text+"space"}>&nbsp;</div>
+                </div> } )}
+            </>
+        );
         }
 
     
 
     function handleChange(event){
         setText(event.target.value);
+    }
+
+    function handleHideAll(){
+        setShowAll(!showAll);
     }
 
     return (
@@ -107,6 +87,7 @@ export default function VerseViewer() {
             </div>
             <div className="viewer">
                 <div className="viewer-heading">Transformation!</div>
+                <button onClick={() => handleHideAll()}>Hide/Show</button>
                 {render()}
             </div>
         </div>

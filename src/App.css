@@ -74,6 +74,7 @@ button {
   display:block;
   margin:auto;
   min-width:80px;
+  margin-bottom: 20px;
 }
 
 .parser-heading, .viewer-heading {
@@ -85,4 +86,8 @@ button {
 html {
   width: 100vw;
   overflow-y: scroll;
+}
+
+.outline-text {
+  font-size:large;
 }
