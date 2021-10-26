@@ -18,7 +18,7 @@ export default class VerseService {
                 localStorage.setItem(verseRef, JSON.stringify(response.data)); 
                 return response.data
 
-            }).catch(e => console.log(e));
+            }).catch(e => {console.log("Failed to retrieve", verseRef)});
         }
 
     }
