@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
-import axios from 'axios'
+import VerseService from './VerseService'
 
+const verseService = new VerseService();
 const HoverableDiv = ({ handleMouseOver, handleMouseOut, handleClick, verseRef }) => {
 
   return (
@@ -45,9 +46,10 @@ const Verse = (data) => {
     setVerseRef(data.verseRef)
 
     if(verseRef !== ""){
-      const url = `https://api.lsm.org/recver.php?String='${verseRef}'&Out=json`
-      axios.get(url).then( response => {
-        const verseText = response.data.verses.map (verse => {
+
+      verseService.getVerse(verseRef).then( response => {
+
+        const verseText = response.verses.map (verse => {
           return (verse.ref + ": " + verse.text + '\x0a');
         })
         setVerseText(verseText)
@@ -60,9 +62,9 @@ const Verse = (data) => {
   // Backup fetch in case the first one fails. Triggers on user click
   useEffect( () => {
     if(verseRef !== "" && verseText.length===0){
-      const url = `https://api.lsm.org/recver.php?String='${verseRef}'&Out=json`
-      axios.get(url).then( response => {
-         const verseText = response.data.verses.map (verse => {
+      verseService.getVerse(verseRef).then( response => {
+
+         const verseText = response.verses.map (verse => {
           return (verse.ref + ": " + verse.text + '\x0a');
         })
         setVerseText(verseText)
